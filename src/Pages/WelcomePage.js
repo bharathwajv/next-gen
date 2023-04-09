@@ -1,5 +1,45 @@
-import { Box, Button, Container, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import { useNavigate  } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import CustomButton from '../Templates/CustomButton';
+import { useTheme } from '@emotion/react';
+
+function WelomePage() {
+  const classes = useStyles();
+  const navigate = useNavigate();
+  const [hasVisited, setHasVisited] = useState(false);
+  const theme = useTheme(); 
+
+   useEffect(() => {
+    const visited = localStorage.getItem('hasVisited');
+    if (visited) {
+      setHasVisited(true);
+    }
+  }, []);
+
+  function handleClick() {
+    navigate('/home'); 
+    localStorage.setItem('hasVisited', true);
+  }
+  if (hasVisited) {
+    navigate('/home'); 
+    return null; 
+  }
+
+  return (
+    <div className={classes.root}>
+      <Box className={classes.box}>
+        <h1 style={{ color: theme.palette.text.dark }} >Hello!</h1>
+        <h3 align="center"  style={{ color: theme.palette.text.dark }}>
+          this is my app and should change the text here . can we get started ?
+        </h3>
+        <CustomButton  variant="contained" color="button" className={classes.button} onClick={handleClick}>   Explore   </CustomButton>
+   
+      </Box>
+    </div>
+  );
+}
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,23 +72,5 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '20px',
   },
 }));
-
-function WelomePage() {
-  const classes = useStyles();
-
-  return (
-    <div className={classes.root}>
-      <Box className={classes.box}>
-        <h1>Welcome to My App</h1>
-        <h3 variant="body1" align="center">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod felis et lectus semper, in scelerisque velit dictum.
-        </h3>
-        <Button variant="contained" color="button" className={classes.button}>
-          Get Started
-        </Button>
-      </Box>
-    </div>
-  );
-}
 
 export default WelomePage;

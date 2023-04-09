@@ -1,15 +1,38 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import './App.css';
-import FloatingNav from './FloatingNav';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import WelcomePage from './Pages/WelcomePage';
+import FloatingNav from './FloatingNav';
 
 //https://user-images.githubusercontent.com/103980/178092656-35720dd3-0a09-4a60-9030-02e8ece10b92.png
 //https://coolors.co/palette/353666-222344-707193-ec5656
+
+function App() {
+  return (
+    <ThemeProvider theme={theme}>
+
+      <CssBaseline />
+
+      <Router>
+        <Routes>
+
+          <Route exact path="/" element={<WelcomePage/>}/>
+          <Route exact path="/home" element={<FloatingNav/>}/>
+
+        </Routes>
+      </Router>
+
+    </ThemeProvider>
+  );
+}
+
+export default App;
+
 const theme = createTheme({
   typography: {
     fontFamily: 'Montserrat, sans-serif',
-    fontWeight: 30  ,
+    fontWeight: 30
   },
   palette: {
     primary: {
@@ -23,6 +46,7 @@ const theme = createTheme({
     },
     text: {
       primary: '#F2E9DC',
+      dark:'#353666'
     },
     action: {
       active: '#EC5656',
@@ -32,15 +56,3 @@ const theme = createTheme({
     },
   },
 });
-
-function App() {
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      {/* <FloatingNav /> */}
-      <WelcomePage></WelcomePage>
-    </ThemeProvider>
-  );
-}
-
-export default App;
